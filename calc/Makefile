@@ -1,8 +1,17 @@
-all: sum.c diff.c main.c
-	gcc -c sum.c 
-	gcc -c diff.c
-	gcc -c main.c
-	gcc -o calc *.o
+SRCS = sum.c diff.c main.c
+OBJS = $(SRCS: .c = .o)
+TARG = calc
+
+CC = gcc
+OPTS = -Wall -O
+
+all: $(TARG)
+
+$(TARG) : $(SRCS) 
+	$(CC) -o $(TARG) $(OBJS) 
+
+%.o : %.c
+	$(CC) $(OPTS) -c $< -o $@
 
 clean:
-	rm *.o calc
+	rm -f $(OBJS) $(TARG)
